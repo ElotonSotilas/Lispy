@@ -1,0 +1,3 @@
+/Users/george/Projects/FDS/Lispy/cmake-build-debug/CMakeFiles/lispy.dir
+/Users/george/Projects/FDS/Lispy/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/george/Projects/FDS/Lispy/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -10,8 +10,8 @@
 #include <fstream>
 #include <array>
 
-// custom function for me so I don't have
-// to count the amount of elements when writing an std::array
+// custom function for me, so I don't have
+// to count the amount of elements when writing a std::array
 template <typename... T>
 constexpr auto make_array(T&&... values) ->
 std::array<typename std::decay<typename std::common_type<T...>::type>::type,
@@ -23,7 +23,7 @@ std::array<typename std::decay<typename std::common_type<T...>::type>::type,
             sizeof...(T)>{std::forward<T>(values)...};
 }
 
-const auto Methods = make_array(
+const auto Methods = make_array (
             "print",
             "println",
             "+",
@@ -43,12 +43,13 @@ const auto Methods = make_array(
             "continue"
         );
 
-const auto Types = make_array(
+const auto Types = make_array (
             "number",
             "string",
             "function",
             "boolean",
-            "struct"
+            "struct",
+            "atom"
         );
 
 // Enum for FSM states
@@ -78,18 +79,26 @@ public:
     void Write(const std::string& output) override;
     void Log(const std::string& log) override;
     void Error(const std::string& error) override;
+    ~FileIO() override {
+        delete &fileStream;
+    }
 
 private:
-    std::ifstream fileStream;
+    std::fstream fileStream;
 };
 
 // ConsoleIO class extends IO
 class ConsoleIO : public IO {
 public:
+    ConsoleIO() = default;
+    ~ConsoleIO() override = default;
     std::string Read() override;
     void Write(const std::string& output) override;
     void Log(const std::string& log) override;
     void Error(const std::string& error) override;
+
+private:
+    bool running = true;
 };
 
 // Abstract Syntax Tree node
@@ -121,8 +130,14 @@ class Parser {
 protected:
     std::vector<ListNode> tree;
 
+private:
+    AstNode* ParseAtom(std::string value);
+    AstNode* ParseList(std::vector<std::string>::iterator& it,
+                       const std::vector<std::string>::const_iterator& end);
+
 public:
     AstNode* Parse(std::vector<std::string>& tokens);
+
 };
 
 // Tokeniser class that translates tokens into the parser
@@ -134,6 +149,7 @@ public:
 // VM class is a finite state machine
 class VM {
 public:
+    VM();
     void Run(IO& io);
 
 private:
@@ -144,7 +160,8 @@ private:
     void print(IO& io);
 };
 
-// Multiple inheritance class that will be used to initialise a runtime with a specific input
+// Multiple inheritance class that will be used to initialise
+// a runtime with a specific input
 class Lispy : private VM, public IO {
 public:
     Lispy(std::string inputType, std::string inputValue); // If it's a file, inputValue is a filepath

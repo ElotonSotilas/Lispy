@@ -66,6 +66,7 @@ build CMakeFiles/lispy.dir/main.cpp.o: CXX_COMPILER__lispy_Debug /Users/george/P
 
 build lispy: CXX_EXECUTABLE_LINKER__lispy_Debug CMakeFiles/lispy.dir/main.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
+  LINK_LIBRARIES = -lLispyLib
   OBJECT_DIR = CMakeFiles/lispy.dir
   POST_BUILD = :
   PRE_LINK = :

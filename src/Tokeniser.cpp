@@ -6,7 +6,7 @@
 #include <unordered_set>
 
 // Tokenising the input
-std::vector<std::string> Tokeniser::Tokenise(IO &input) {
+inline std::vector<std::string> Tokeniser::Tokenise(IO &input) {
     std::string data = input.Read();
     std::vector<std::string> tokens;
 
@@ -23,9 +23,9 @@ std::vector<std::string> Tokeniser::Tokenise(IO &input) {
                 tok.clear();
             }
         }
-        else if (c == '(' || c == ')') {
-            tokens.push_back(std::string{c});
-        }
+//        else if (c == '(' || c == ')') {
+//            tokens.push_back(std::string{c});
+//        }
         else {
             tok += c;
         }

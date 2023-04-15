@@ -1,1 +1,0 @@
-target_precompile_headers(lispy INTERFACE lispy.h)

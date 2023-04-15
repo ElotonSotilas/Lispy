@@ -9,48 +9,7 @@
 #include <vector>
 #include <fstream>
 #include <array>
-
-// custom function for me, so I don't have
-// to count the amount of elements when writing a std::array
-template <typename... T>
-constexpr auto make_array(T&&... values) ->
-std::array<typename std::decay<typename std::common_type<T...>::type>::type,
-           sizeof...(T)>
-{
-    return std::array<
-            typename std::decay<
-                    typename std::common_type<T...>::type>::type,
-            sizeof...(T)>{std::forward<T>(values)...};
-}
-
-const auto Methods = make_array (
-            "print",
-            "println",
-            "+",
-            "-",
-            "/",
-            "*",
-            "%",
-            "defunc",
-            "defstruct",
-            "member",
-            "if",
-            "else",
-            "setq",
-            "while",
-            "return",
-            "break",
-            "continue"
-        );
-
-const auto Types = make_array (
-            "number",
-            "string",
-            "function",
-            "boolean",
-            "struct",
-            "atom"
-        );
+#include <sstream>
 
 // Enum for FSM states
 enum class State {
@@ -96,27 +55,36 @@ public:
     void Write(const std::string& output) override;
     void Log(const std::string& log) override;
     void Error(const std::string& error) override;
-
-private:
-    bool running = true;
 };
 
 // Abstract Syntax Tree node
 class AstNode {
 public:
+    AstNode(AstNode* parent = nullptr) : parent(parent) {}
     virtual ~AstNode() = default;
+    AstNode* parent;
 };
 
 // Terminal AST node
 class AtomNode : public AstNode {
+private:
+    enum class AtomType {
+        NUMERIC,
+        STRING
+    };
+
 public:
-    explicit AtomNode(std::string value) : value(std::move(value)) {}
+    explicit AtomNode(std::string value, AstNode* parent = nullptr)
+            : AstNode(parent), value(std::move(value)) {}
     std::string value;
+
+    AtomType type;
 };
 
 // Non-terminal AST node
 class ListNode : public AstNode {
 public:
+    explicit ListNode(AstNode* parent = nullptr) : AstNode(parent) {}
     std::vector<AstNode*> children;
     ~ListNode() override {
         for (auto& child : children) {
@@ -124,6 +92,7 @@ public:
         }
     }
 };
+
 
 // Parser class that splits tokens using an AST
 class Parser {
@@ -141,7 +110,7 @@ public:
 };
 
 // Tokeniser class that translates tokens into the parser
-class Tokeniser : public Parser {
+class Tokeniser {
 public:
     std::vector<std::string> Tokenise(IO& input);
 };
@@ -155,21 +124,28 @@ public:
 private:
     State state_;
     AstNode* root_;
+    std::stringstream printer_;
     void read(IO& io);
-    void eval(IO& io);
+    bool eval();
     void print(IO& io);
 };
 
-// Multiple inheritance class that will be used to initialise
-// a runtime with a specific input
-class Lispy : private VM, public IO {
-public:
-    Lispy(std::string inputType, std::string inputValue); // If it's a file, inputValue is a filepath
-    std::string Read() override;
-    void Write(const std::string& output) override;
-    void Log(const std::string& log) override;
-    void Error(const std::string& error) override;
-    void Run();
-private:
-    std::unique_ptr<IO> io_;
-};
+// // Multiple inheritance class that will be used to initialise
+// // a runtime with a specific input
+//class Lispy : public VM, public IO {
+//public:
+//    enum class InputType {
+//        FILE,
+//        CONSOLE
+//    };
+//    Lispy(InputType inputType,
+//          std::string* inputValue = nullptr); // If it's a file, inputValue is a filepath
+//                                              // Otherwise, the value is ignored (default nullptr)
+//    std::string Read() override;
+//    void Write(const std::string& output) override;
+//    void Log(const std::string& log) override;
+//    void Error(const std::string& error) override;
+//    void Run();
+//private:
+//    std::unique_ptr<IO> io_;
+//};

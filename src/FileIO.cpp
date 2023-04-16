@@ -9,7 +9,7 @@
 namespace fs = std::filesystem;
 
 // Constructor
-inline FileIO::FileIO(std::string fileName) {
+FileIO::FileIO(std::string fileName) {
     fileStream.open(fileName);
 
     if (fileStream.fail()) {
@@ -23,7 +23,7 @@ inline FileIO::FileIO(std::string fileName) {
 }
 
 // Read the file into a string.
-inline std::string FileIO::Read() {
+std::string FileIO::Read() {
     std::stringstream buf{""}; // initialised as an empty string
     std::string line;
 
@@ -37,14 +37,14 @@ inline std::string FileIO::Read() {
     return buf.str();
 }
 
-inline void FileIO::Write(const std::string &output) {
+void FileIO::Write(const std::string &output) {
     fileStream << output << '\n';
 }
 
-inline void FileIO::Log(const std::string &log) {
+void FileIO::Log(const std::string &log) {
     fileStream << "[LOG] " << log << '\n';
 }
 
-inline void FileIO::Error(const std::string &error) {
+void FileIO::Error(const std::string &error) {
     fileStream << "[ERROR] " << error << '\n';
 }

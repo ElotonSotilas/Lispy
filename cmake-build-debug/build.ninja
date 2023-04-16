@@ -52,7 +52,7 @@ build cmake_object_order_depends_target_lispy: phony || cmake_object_order_depen
 build CMakeFiles/lispy.dir/main.cpp.o: CXX_COMPILER__lispy_Debug /Users/george/Projects/FDS/Lispy/main.cpp || cmake_object_order_depends_target_lispy
   DEP_FILE = CMakeFiles/lispy.dir/main.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
-  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes
   OBJECT_DIR = CMakeFiles/lispy.dir
   OBJECT_FILE_DIR = CMakeFiles/lispy.dir
 
@@ -113,35 +113,35 @@ build cmake_object_order_depends_target_LispyLib: phony || src/CMakeFiles/LispyL
 build src/CMakeFiles/LispyLib.dir/ConsoleIO.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/ConsoleIO.cpp || cmake_object_order_depends_target_LispyLib
   DEP_FILE = src/CMakeFiles/LispyLib.dir/ConsoleIO.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
-  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes
   OBJECT_DIR = src/CMakeFiles/LispyLib.dir
   OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
 
 build src/CMakeFiles/LispyLib.dir/FileIO.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/FileIO.cpp || cmake_object_order_depends_target_LispyLib
   DEP_FILE = src/CMakeFiles/LispyLib.dir/FileIO.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
-  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes
   OBJECT_DIR = src/CMakeFiles/LispyLib.dir
   OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
 
 build src/CMakeFiles/LispyLib.dir/Parser.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/Parser.cpp || cmake_object_order_depends_target_LispyLib
   DEP_FILE = src/CMakeFiles/LispyLib.dir/Parser.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
-  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes
   OBJECT_DIR = src/CMakeFiles/LispyLib.dir
   OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
 
 build src/CMakeFiles/LispyLib.dir/Tokeniser.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/Tokeniser.cpp || cmake_object_order_depends_target_LispyLib
   DEP_FILE = src/CMakeFiles/LispyLib.dir/Tokeniser.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
-  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes
   OBJECT_DIR = src/CMakeFiles/LispyLib.dir
   OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
 
 build src/CMakeFiles/LispyLib.dir/VM.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/VM.cpp || cmake_object_order_depends_target_LispyLib
   DEP_FILE = src/CMakeFiles/LispyLib.dir/VM.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
-  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes
   OBJECT_DIR = src/CMakeFiles/LispyLib.dir
   OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
 

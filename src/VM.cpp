@@ -6,7 +6,7 @@
 
 VM::VM() : state_(State::INIT_STATE), root_(nullptr) {}
 
-inline void VM::Run(IO &io) {
+void VM::Run(IO &io) {
     while (state_ != State::EXIT_STATE) {
         switch (state_) {
             case State::INIT_STATE: {
@@ -37,7 +37,7 @@ inline void VM::Run(IO &io) {
     }
 }
 
-inline void VM::read(IO &io) {
+void VM::read(IO &io) {
     auto tokens = Tokeniser().Tokenise(io);
 
     if (tokens.empty()) {
@@ -48,7 +48,7 @@ inline void VM::read(IO &io) {
     }
 }
 
-inline bool VM::eval() {
+bool VM::eval() {
     if (auto listNode = dynamic_cast<ListNode*>(root_)) {
         for (auto node : listNode->children) {
             root_ = node;  // Set the root to the current child node
@@ -120,6 +120,6 @@ inline bool VM::eval() {
 }
 
 
-inline void VM::print(IO &io) {
+void VM::print(IO &io) {
     io.Write(printer_.str());
 }

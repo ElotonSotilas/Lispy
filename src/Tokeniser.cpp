@@ -23,9 +23,15 @@ std::vector<std::string> Tokeniser::Tokenise(IO &input) {
                 tok.clear();
             }
         }
+
         else if (c == '(' || c == ')') {
+            if (!tok.empty()) {
+                tokens.push_back(tok);
+                tok.clear();
+            }
             tokens.push_back(std::string{c});
         }
+
         else {
             tok += c;
         }
@@ -33,6 +39,12 @@ std::vector<std::string> Tokeniser::Tokenise(IO &input) {
     if (!tok.empty()) {
         tokens.push_back(tok);
     }
+
+    // DEBUG
+
+//    std::copy(tokens.begin(), tokens.end(),
+//              std::ostream_iterator<std::string>(std::cout, "\n"));
+
     return tokens;
 }
 

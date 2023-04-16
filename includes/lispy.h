@@ -127,6 +127,7 @@ private:
     std::stringstream printer_;
     void read(IO& io);
     bool eval();
+    bool evalNode(AstNode* node);
     void print(IO& io);
 };
 

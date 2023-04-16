@@ -2,6 +2,7 @@
 // Created by George Vassilev on 14.04.23.
 //
 
+#include <iterator>
 #include "lispy.h"
 
 AstNode *Parser::Parse(std::vector<std::string> &tokens) {
@@ -16,7 +17,7 @@ AstNode* Parser::ParseAtom(std::string value) {
 AstNode* Parser::ParseList(std::vector<std::string>::iterator& it,
                            const std::vector<std::string>::const_iterator& end) {
     auto node = new ListNode();
-    while (it != end && *it != ")") {
+    while (it < end && *it != ")") {
         if (*it == "(") {
             ++it;
             node->children.push_back(ParseList(it, end));

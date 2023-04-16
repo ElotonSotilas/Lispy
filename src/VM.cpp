@@ -48,66 +48,78 @@ void VM::read(IO &io) {
     }
 }
 
-bool VM::eval() {
-    if (auto listNode = dynamic_cast<ListNode*>(root_)) {
-        for (auto node : listNode->children) {
-            root_ = node;  // Set the root to the current child node
-            eval();  // Recursively evaluate the child node
+// Helper function for the eval state
+bool VM::evalNode(AstNode *node) {
+    if (auto listNode = dynamic_cast<ListNode*>(node)) {
+        if (listNode->children.empty()) {
+            std::cerr << "Argument count problem: "
+                         "Operator requires at least one operand."
+                      << '\n';
+            exit(-1);
         }
-    }
-
-    else if (auto atomNode = dynamic_cast<AtomNode*>(root_)) {
+        for (auto child : listNode->children) {
+            if (evalNode(child)) {
+                return true;
+            }
+        }
+    } else if (auto atomNode = dynamic_cast<AtomNode*>(node)) {
         if (atomNode->value == "+") {
             long double result = 0;
             int count = 0;
-            auto listNode = dynamic_cast<ListNode*>(root_->parent);
-            for (auto child : listNode->children) {
-                auto atom = dynamic_cast<AtomNode*>(child);
-
-                // Check if the atom exists and is not empty, and not the same as atomNode
-
-                // NOTICE: the last comparison can be avoided if using indexes,
-                // instead of a range-based for loop
-                if (atom && !atom->value.empty() && atom != atomNode) {
-                    if (auto x = std::stold(atom->value)) {
-                        result += x;
+            if (auto listNode = dynamic_cast<ListNode*>(node->parent)) {
+                for (auto child: listNode->children) {
+                    auto atom = dynamic_cast<AtomNode *>(child);
+                    if (atom && !atom->value.empty() && atom != atomNode) {
+                        if (auto x = std::stold(atom->value)) {
+                            result += x;
+                        } else {
+                            std::cerr << "Conversion problem: "
+                                         "Operator (+) takes arguments of types Numeric... -> Numeric"
+                                      << '\n';
+                            exit(-1);
+                        }
+                        count++;
                     }
-                    else {
-                        std::cerr << "Conversion problem: "
-                                     "Operator (+) takes arguments of types Numeric... -> Numeric"
-                                     << '\n';
-                        exit(-1);
-                    }
-                    count++;
                 }
             }
 
-            if (count != 0) atomNode->value = std::to_string(result);
-
-            else {
+            if (count == 0) {
                 std::cerr << "Argument count problem: "
                              "Operator (+) does not have any operands."
                           << '\n';
 
                 exit(-1);
             }
+            else if (count == 1) {
+                std::cerr << "Argument count problem: "
+                             "Operator (+) requires at least two operands."
+                          << '\n';
+
+                exit(-1);
+            }
+            else {
+                atomNode->value = std::to_string(result);
+            }
         }
 
         else if (atomNode->value == "print") {
-            auto listNode = dynamic_cast<ListNode*>(root_->parent);
-            for (auto child : listNode->children) {
-                auto atom = dynamic_cast<AtomNode*>(child);
-
-                if (atom && !atom->value.empty()) {
-                    printer_ << atom->value;
-                }
-
-                else {
+            if (auto listNode = dynamic_cast<ListNode*>(node->parent)) {
+                if (listNode->children.size() == 1) {
                     std::cerr << "Argument count problem: "
                                  "print method requires at least one argument."
                               << '\n';
+                    exit(-1);
+                }
+                for (auto child: listNode->children) {
+                    auto atom = dynamic_cast<AtomNode *>(child);
+
+                    if (atom && !atom->value.empty()) {
+                        printer_ << atom->value;
+                    }
+
                 }
             }
+
             return true;
         }
     }
@@ -119,6 +131,13 @@ bool VM::eval() {
     return false;
 }
 
+bool VM::eval() {
+    if (root_) {
+        return evalNode(root_);
+    }
+
+    return false;
+}
 
 void VM::print(IO &io) {
     io.Write(printer_.str());

@@ -11,15 +11,6 @@
 #include <array>
 #include <sstream>
 
-// Enum for FSM states
-enum class State {
-    INIT_STATE,
-    READ_STATE,
-    EVAL_STATE,
-    PRINT_STATE,
-    EXIT_STATE
-};
-
 // IO class is an abstract class that feeds a data stream into the tokeniser
 class IO {
 public:
@@ -118,6 +109,15 @@ public:
 // VM class is a finite state machine
 class VM {
 public:
+    // Enum for FSM states
+    enum class State {
+        INIT_STATE,
+        READ_STATE,
+        EVAL_STATE,
+        PRINT_STATE,
+        EXIT_STATE
+    };
+
     VM();
     void Run(IO& io);
 

@@ -3,6 +3,7 @@ add_library(LispyLib STATIC
         FileIO.cpp
         Parser.cpp
         Tokeniser.cpp
-        VM.cpp)
+        VM.cpp
+        ${PROJECT_SOURCE_DIR}/includes/lispy.h)
 
-target_include_directories(LispyLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../includes)
+target_include_directories(LispyLib PUBLIC ${PROJECT_SOURCE_DIR}/include)

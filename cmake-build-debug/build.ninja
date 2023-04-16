@@ -47,12 +47,12 @@ cmake_ninja_workdir = /Users/george/Projects/FDS/Lispy/cmake-build-debug/
 #############################################
 # Order-only phony target for lispy
 
-build cmake_object_order_depends_target_lispy: phony || CMakeFiles/lispy.dir
+build cmake_object_order_depends_target_lispy: phony || cmake_object_order_depends_target_LispyLib
 
 build CMakeFiles/lispy.dir/main.cpp.o: CXX_COMPILER__lispy_Debug /Users/george/Projects/FDS/Lispy/main.cpp || cmake_object_order_depends_target_lispy
   DEP_FILE = CMakeFiles/lispy.dir/main.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
-  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/src
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
   OBJECT_DIR = CMakeFiles/lispy.dir
   OBJECT_FILE_DIR = CMakeFiles/lispy.dir
 
@@ -64,9 +64,9 @@ build CMakeFiles/lispy.dir/main.cpp.o: CXX_COMPILER__lispy_Debug /Users/george/P
 #############################################
 # Link the executable lispy
 
-build lispy: CXX_EXECUTABLE_LINKER__lispy_Debug CMakeFiles/lispy.dir/main.cpp.o
+build lispy: CXX_EXECUTABLE_LINKER__lispy_Debug CMakeFiles/lispy.dir/main.cpp.o | src/libLispyLib.a || src/libLispyLib.a
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
-  LINK_LIBRARIES = -lLispyLib
+  LINK_LIBRARIES = src/libLispyLib.a
   OBJECT_DIR = CMakeFiles/lispy.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -97,7 +97,100 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /Users/george/Projects/FDS/Lispy/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target LispyLib
+
+
+#############################################
+# Order-only phony target for LispyLib
+
+build cmake_object_order_depends_target_LispyLib: phony || src/CMakeFiles/LispyLib.dir
+
+build src/CMakeFiles/LispyLib.dir/ConsoleIO.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/ConsoleIO.cpp || cmake_object_order_depends_target_LispyLib
+  DEP_FILE = src/CMakeFiles/LispyLib.dir/ConsoleIO.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  OBJECT_DIR = src/CMakeFiles/LispyLib.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
+
+build src/CMakeFiles/LispyLib.dir/FileIO.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/FileIO.cpp || cmake_object_order_depends_target_LispyLib
+  DEP_FILE = src/CMakeFiles/LispyLib.dir/FileIO.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  OBJECT_DIR = src/CMakeFiles/LispyLib.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
+
+build src/CMakeFiles/LispyLib.dir/Parser.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/Parser.cpp || cmake_object_order_depends_target_LispyLib
+  DEP_FILE = src/CMakeFiles/LispyLib.dir/Parser.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  OBJECT_DIR = src/CMakeFiles/LispyLib.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
+
+build src/CMakeFiles/LispyLib.dir/Tokeniser.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/Tokeniser.cpp || cmake_object_order_depends_target_LispyLib
+  DEP_FILE = src/CMakeFiles/LispyLib.dir/Tokeniser.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  OBJECT_DIR = src/CMakeFiles/LispyLib.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
+
+build src/CMakeFiles/LispyLib.dir/VM.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/VM.cpp || cmake_object_order_depends_target_LispyLib
+  DEP_FILE = src/CMakeFiles/LispyLib.dir/VM.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes -I/Users/george/Projects/FDS/Lispy/include
+  OBJECT_DIR = src/CMakeFiles/LispyLib.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target LispyLib
+
+
+#############################################
+# Link the static library src/libLispyLib.a
+
+build src/libLispyLib.a: CXX_STATIC_LIBRARY_LINKER__LispyLib_Debug src/CMakeFiles/LispyLib.dir/ConsoleIO.cpp.o src/CMakeFiles/LispyLib.dir/FileIO.cpp.o src/CMakeFiles/LispyLib.dir/Parser.cpp.o src/CMakeFiles/LispyLib.dir/Tokeniser.cpp.o src/CMakeFiles/LispyLib.dir/VM.cpp.o
+  ARCH_FLAGS = -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = src/CMakeFiles/LispyLib.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = src/libLispyLib.a
+  TARGET_PDB = LispyLib.a.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/george/Projects/FDS/Lispy/cmake-build-debug/src && "/Users/george/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build src/edit_cache: phony src/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build src/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/george/Projects/FDS/Lispy/cmake-build-debug/src && "/Users/george/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/bin/cmake" --regenerate-during-build -S/Users/george/Projects/FDS/Lispy -B/Users/george/Projects/FDS/Lispy/cmake-build-debug
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
+
+build LispyLib: phony src/libLispyLib.a
+
+build libLispyLib.a: phony src/libLispyLib.a
 
 # =============================================================================
 # Folder targets.
@@ -107,7 +200,14 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /Users/george/Projects/FDS/Lispy/cmake-build-debug
 
-build all: phony lispy
+build all: phony lispy src/all
+
+# =============================================================================
+
+#############################################
+# Folder: /Users/george/Projects/FDS/Lispy/cmake-build-debug/src
+
+build src/all: phony src/libLispyLib.a
 
 # =============================================================================
 # Built-in targets
@@ -116,14 +216,14 @@ build all: phony lispy
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCXXInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeGenericSystem.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/Clang.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/GNU.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Darwin.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/UnixPaths.cmake /Users/george/Projects/FDS/Lispy/CMakeLists.txt CMakeCache.txt CMakeFiles/3.25.2/CMakeCCompiler.cmake CMakeFiles/3.25.2/CMakeCXXCompiler.cmake CMakeFiles/3.25.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCXXInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeGenericSystem.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/Clang.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/GNU.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Darwin.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/UnixPaths.cmake /Users/george/Projects/FDS/Lispy/CMakeLists.txt /Users/george/Projects/FDS/Lispy/src/CMakeLists.txt CMakeCache.txt CMakeFiles/3.25.2/CMakeCCompiler.cmake CMakeFiles/3.25.2/CMakeCXXCompiler.cmake CMakeFiles/3.25.2/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCXXInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeGenericSystem.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/Clang.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/GNU.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Darwin.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/UnixPaths.cmake /Users/george/Projects/FDS/Lispy/CMakeLists.txt CMakeCache.txt CMakeFiles/3.25.2/CMakeCCompiler.cmake CMakeFiles/3.25.2/CMakeCXXCompiler.cmake CMakeFiles/3.25.2/CMakeSystem.cmake: phony
+build /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCXXInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeGenericSystem.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/Clang.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Compiler/GNU.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/Darwin.cmake /Users/george/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Platform/UnixPaths.cmake /Users/george/Projects/FDS/Lispy/CMakeLists.txt /Users/george/Projects/FDS/Lispy/src/CMakeLists.txt CMakeCache.txt CMakeFiles/3.25.2/CMakeCCompiler.cmake CMakeFiles/3.25.2/CMakeCXXCompiler.cmake CMakeFiles/3.25.2/CMakeSystem.cmake: phony
 
 
 #############################################

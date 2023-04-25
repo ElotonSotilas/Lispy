@@ -19,13 +19,7 @@ void VM::Run(IO &io) {
                 break;
             }
             case State::EVAL_STATE: {
-                // If eval() returns true, we are going to the print state
-                // Else, we go back to init state
-                state_ = eval() ? State::PRINT_STATE : State::INIT_STATE;
-                break;
-            }
-            case State::PRINT_STATE: {
-                print(io);
+                eval();
                 state_ = State::INIT_STATE;
                 break;
             }
@@ -38,11 +32,10 @@ void VM::Run(IO &io) {
 }
 
 void VM::read(IO &io) {
-    auto tokens = Tokeniser().Tokenise(io);
+    auto tokens = Tokeniser::Tokenise(io);
 
     if (tokens.empty()) {
         io.Log("Finished execution.");
-        state_ = State::EXIT_STATE;
     } else {
         root_ = Parser().Parse(tokens);
     }
@@ -70,36 +63,37 @@ std::string VM::evalNode(const AstNode& node) {
                 sum += x;
             }
             catch (...) {
-                throw std::runtime_error("Conversion problem:\nOperator (+) takes arguments of types Numeric... -> Numeric");
+                throw std::runtime_error("Conversion problem:"
+                                         "\nOperator (+) takes arguments of types Numeric... -> Numeric");
             }
         }
- 
+
         return std::to_string(sum);
     }
 
     if (listNode.head == "print") {
         if (listNode.tail.empty()) {
-            throw std::runtime_error("Argument count problem:\nPrinting requires at least one operand.");
+            throw std::runtime_error("Argument count problem:"
+                                     "\nPrinting requires at least one operand.");
         }
 
         for (auto& arg : listNode.tail) {
             std::cout << evalNode(*arg) << ' ';
         }
+
         std::cout << '\n';
+
         return "";
     }
 
     throw std::runtime_error("Unknown function: " + listNode.head);
 }
 
-bool VM::eval() {
+void VM::eval() {
     if (root_) {
         evalNode(*root_);
     }
 
-    return false;
-}
-
-void VM::print(IO &io) {
-    io.Write(printer_.str());
+    // reset root
+    root_ = nullptr;
 }

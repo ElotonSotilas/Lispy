@@ -4,7 +4,6 @@
 
 #include <iterator>
 #include "lispy.h"
-#include <cassert>
 
 std::unique_ptr<AstNode> Parser::Parse(const std::vector<std::string> &tokens) {
     if (tokens.size() == 1 && tokens.front() != "(") {
@@ -27,7 +26,7 @@ std::unique_ptr<AstNode> Parser::ParseList(std::vector<std::string>::const_itera
         }
         else if (*it == "(") {
             if (node->head.empty()) {
-                // this means we encountered two opening parnetheses in a row
+                // this means we encountered two opening parentheses in a row
                 throw std::runtime_error("Parse Error: List nodes must have literal head");
             }
             ++it; // advance past opening parenthesis

@@ -73,7 +73,7 @@ public:
 class Parser {
 private:
     std::unique_ptr<AstNode> ParseList(std::vector<std::string>::const_iterator& it,
-                                       const std::vector<std::string>::const_iterator end);
+                                       std::vector<std::string>::const_iterator end);
 
 public:
     std::unique_ptr<AstNode> Parse(const std::vector<std::string>& tokens);
@@ -82,7 +82,7 @@ public:
 // Tokeniser class that translates tokens into the parser
 class Tokeniser {
 public:
-    std::vector<std::string> Tokenise(IO& input);
+    static std::vector<std::string> Tokenise(IO& input);
 };
 
 // VM class is a finite state machine
@@ -93,7 +93,6 @@ public:
         INIT_STATE,
         READ_STATE,
         EVAL_STATE,
-        PRINT_STATE,
         EXIT_STATE
     };
 
@@ -103,11 +102,9 @@ public:
 private:
     State state_;
     std::unique_ptr<AstNode> root_;
-    std::stringstream printer_;
     void read(IO& io);
-    bool eval();
+    void eval();
     std::string evalNode(const AstNode& node);
-    void print(IO& io);
 };
 
 // // Multiple inheritance class that will be used to initialise

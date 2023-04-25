@@ -30,7 +30,7 @@ std::string FileIO::Read() {
     if (fileStream->eof() || !fileStream)
         return buf.str();
 
-    while (fileStream->getline(line.data(), INTMAX_MAX)) {
+    while (getline(*fileStream, line)) {
         buf << line << '\n';
     }
 

@@ -51,7 +51,7 @@ public:
 class AstNode {
 public:
     explicit AstNode(AstNode* parent = nullptr)
-             : parent(std::move(parent)) {}
+             : parent(parent) {}
     virtual ~AstNode() = default;
     AstNode* parent;
 };
@@ -79,7 +79,7 @@ class Parser {
 private:
     std::unique_ptr<AstNode> ParseAtom(const std::string& value);
     std::unique_ptr<AstNode> ParseList(std::vector<std::string>::iterator& it,
-                                       const std::vector<std::string>::const_iterator& end);
+                                       std::vector<std::string>::iterator& end);
 
 public:
     std::unique_ptr<AstNode> Parse(std::vector<std::string>& tokens);

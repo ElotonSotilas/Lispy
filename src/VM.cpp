@@ -43,7 +43,9 @@ void VM::read(IO &io) {
     if (tokens.empty()) {
         io.Log("Finished execution.");
         state_ = State::EXIT_STATE;
-    } else {
+    }
+
+    else {
         root_ = Parser().Parse(tokens);
     }
 }
@@ -52,7 +54,7 @@ void VM::read(IO &io) {
 bool VM::evalNode(AstNode *node) {
     if (auto listNode = dynamic_cast<ListNode *>(node)) {
         if (listNode->children.empty()) {
-            std::cerr << "Argument count problem: "
+            std::cout << "Argument count problem: "
                          "Operator requires at least one operand."
                       << '\n';
             exit(-1);
@@ -62,7 +64,9 @@ bool VM::evalNode(AstNode *node) {
                 return true;
             }
         }
-    } else if (auto atomNode = dynamic_cast<AtomNode *>(node)) {
+    }
+
+    else if (auto atomNode = dynamic_cast<AtomNode *>(node)) {
         if (atomNode->value == "+") {
             long double result = 0;
             int count = 0;
@@ -75,7 +79,7 @@ bool VM::evalNode(AstNode *node) {
                             result += x;
                             count++;
                         } catch (...) {
-                            std::cerr << "Conversion problem: "
+                            std::cout << "Conversion problem: "
                                          "Operator (+) takes arguments of types Numeric... -> Numeric"
                                       << '\n';
                             exit(-1);
@@ -85,13 +89,13 @@ bool VM::evalNode(AstNode *node) {
             }
 
             if (count == 0) {
-                std::cerr << "Argument count problem: "
+                std::cout << "Argument count problem: "
                              "Operator (+) does not have any operands."
                           << '\n';
 
                 exit(-1);
             } else if (count < 2) {
-                std::cerr << "Argument count problem: "
+                std::cout << "Argument count problem: "
                              "Operator (+) requires at least two operands."
                           << '\n';
 
@@ -100,7 +104,9 @@ bool VM::evalNode(AstNode *node) {
                 atomNode->value = std::to_string(result);
             }
 
-        } else if (atomNode->value == "print") {
+        }
+
+        else if (atomNode->value == "print") {
             if (auto pListNode = dynamic_cast<ListNode *>(node->parent)) {
                 if (pListNode->children.size() == 1) {
                     std::cerr << "Argument count problem: "
@@ -118,7 +124,9 @@ bool VM::evalNode(AstNode *node) {
             }
             return true;
         }
-    } else {
+    }
+
+    else {
         throw std::runtime_error("Unknown node type.");
     }
 

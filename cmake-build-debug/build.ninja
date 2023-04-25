@@ -145,6 +145,13 @@ build src/CMakeFiles/LispyLib.dir/VM.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/
   OBJECT_DIR = src/CMakeFiles/LispyLib.dir
   OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
 
+build src/CMakeFiles/LispyLib.dir/Lispy.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/george/Projects/FDS/Lispy/src/Lispy.cpp || cmake_object_order_depends_target_LispyLib
+  DEP_FILE = src/CMakeFiles/LispyLib.dir/Lispy.cpp.o.d
+  FLAGS = -fsanitize=address -g -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++2b
+  INCLUDES = -I/Users/george/Projects/FDS/Lispy/includes
+  OBJECT_DIR = src/CMakeFiles/LispyLib.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/LispyLib.dir
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target LispyLib
@@ -153,7 +160,7 @@ build src/CMakeFiles/LispyLib.dir/VM.cpp.o: CXX_COMPILER__LispyLib_Debug /Users/
 #############################################
 # Link the static library src/libLispyLib.a
 
-build src/libLispyLib.a: CXX_STATIC_LIBRARY_LINKER__LispyLib_Debug src/CMakeFiles/LispyLib.dir/ConsoleIO.cpp.o src/CMakeFiles/LispyLib.dir/FileIO.cpp.o src/CMakeFiles/LispyLib.dir/Parser.cpp.o src/CMakeFiles/LispyLib.dir/Tokeniser.cpp.o src/CMakeFiles/LispyLib.dir/VM.cpp.o
+build src/libLispyLib.a: CXX_STATIC_LIBRARY_LINKER__LispyLib_Debug src/CMakeFiles/LispyLib.dir/ConsoleIO.cpp.o src/CMakeFiles/LispyLib.dir/FileIO.cpp.o src/CMakeFiles/LispyLib.dir/Parser.cpp.o src/CMakeFiles/LispyLib.dir/Tokeniser.cpp.o src/CMakeFiles/LispyLib.dir/VM.cpp.o src/CMakeFiles/LispyLib.dir/Lispy.cpp.o
   ARCH_FLAGS = -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
   LANGUAGE_COMPILE_FLAGS = -fsanitize=address -g -Wall -Wextra -g
   OBJECT_DIR = src/CMakeFiles/LispyLib.dir

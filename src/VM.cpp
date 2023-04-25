@@ -50,35 +50,36 @@ void VM::read(IO &io) {
 
 // Helper function for the eval state
 bool VM::evalNode(AstNode *node) {
-    if (auto listNode = dynamic_cast<ListNode*>(node)) {
+    if (auto listNode = dynamic_cast<ListNode *>(node)) {
         if (listNode->children.empty()) {
             std::cerr << "Argument count problem: "
                          "Operator requires at least one operand."
                       << '\n';
             exit(-1);
         }
-        for (auto child : listNode->children) {
-            if (evalNode(child)) {
+        for (auto& child: listNode->children) {
+            if (evalNode(child.get())) {
                 return true;
             }
         }
-    } else if (auto atomNode = dynamic_cast<AtomNode*>(node)) {
+    } else if (auto atomNode = dynamic_cast<AtomNode *>(node)) {
         if (atomNode->value == "+") {
             long double result = 0;
             int count = 0;
-            if (auto listNode = dynamic_cast<ListNode*>(node->parent)) {
-                for (auto child: listNode->children) {
-                    auto atom = dynamic_cast<AtomNode *>(child);
-                    if (atom && !atom->value.empty() && atom != atomNode) {
-                        if (auto x = std::stold(atom->value)) {
+            if (auto pNode = dynamic_cast<ListNode *>(node->parent)) {
+                for (auto& child: pNode->children) {
+                    auto atom = dynamic_cast<AtomNode *>(child.get());
+                    if (atom && !atom->value.empty() && atom->value != atomNode->value) {
+                        try {
+                            auto x = std::stold(atom->value);
                             result += x;
-                        } else {
+                            count++;
+                        } catch (...) {
                             std::cerr << "Conversion problem: "
                                          "Operator (+) takes arguments of types Numeric... -> Numeric"
                                       << '\n';
                             exit(-1);
                         }
-                        count++;
                     }
                 }
             }
@@ -89,42 +90,35 @@ bool VM::evalNode(AstNode *node) {
                           << '\n';
 
                 exit(-1);
-            }
-            else if (count == 1) {
+            } else if (count < 2) {
                 std::cerr << "Argument count problem: "
                              "Operator (+) requires at least two operands."
                           << '\n';
 
                 exit(-1);
-            }
-            else {
+            } else {
                 atomNode->value = std::to_string(result);
             }
-        }
 
-        else if (atomNode->value == "print") {
-            if (auto listNode = dynamic_cast<ListNode*>(node->parent)) {
-                if (listNode->children.size() == 1) {
+        } else if (atomNode->value == "print") {
+            if (auto pListNode = dynamic_cast<ListNode *>(node->parent)) {
+                if (pListNode->children.size() == 1) {
                     std::cerr << "Argument count problem: "
                                  "print method requires at least one argument."
                               << '\n';
                     exit(-1);
                 }
-                for (auto child: listNode->children) {
-                    auto atom = dynamic_cast<AtomNode *>(child);
+                for (auto& child: pListNode->children) {
+                    auto atom = dynamic_cast<AtomNode *>(child.get());
 
                     if (atom && !atom->value.empty()) {
                         printer_ << atom->value;
                     }
-
                 }
             }
-
             return true;
         }
-    }
-
-    else {
+    } else {
         throw std::runtime_error("Unknown node type.");
     }
 
@@ -133,7 +127,7 @@ bool VM::evalNode(AstNode *node) {
 
 bool VM::eval() {
     if (root_) {
-        return evalNode(root_);
+        return evalNode(root_.get());
     }
 
     return false;

@@ -10,6 +10,7 @@
 #include <fstream>
 #include <array>
 #include <sstream>
+#include <memory>
 
 // IO class is an abstract class that feeds a data stream into the tokeniser
 class IO {
@@ -24,17 +25,15 @@ public:
 // FileIO class extends IO
 class FileIO : public IO {
 public:
-    FileIO(std::string fileName);
+    explicit FileIO(const std::string& fileName);
     std::string Read() override;
     void Write(const std::string& output) override;
     void Log(const std::string& log) override;
     void Error(const std::string& error) override;
-    ~FileIO() override {
-        delete &fileStream;
-    }
+    ~FileIO() override = default;
 
 private:
-    std::fstream fileStream;
+    std::unique_ptr<std::fstream> fileStream;
 };
 
 // ConsoleIO class extends IO
@@ -51,53 +50,40 @@ public:
 // Abstract Syntax Tree node
 class AstNode {
 public:
-    AstNode(AstNode* parent = nullptr) : parent(parent) {}
+    explicit AstNode(AstNode* parent = nullptr)
+             : parent(std::move(parent)) {}
     virtual ~AstNode() = default;
     AstNode* parent;
 };
 
 // Terminal AST node
 class AtomNode : public AstNode {
-private:
-    enum class AtomType {
-        NUMERIC,
-        STRING
-    };
-
 public:
     explicit AtomNode(std::string value, AstNode* parent = nullptr)
-            : AstNode(parent), value(std::move(value)) {}
+            : AstNode(parent)
+            , value(std::move(value)) {}
     std::string value;
-
-    AtomType type;
 };
 
 // Non-terminal AST node
 class ListNode : public AstNode {
 public:
-    explicit ListNode(AstNode* parent = nullptr) : AstNode(parent) {}
-    std::vector<AstNode*> children;
-    ~ListNode() override {
-        for (auto& child : children) {
-            delete child;
-        }
-    }
+    explicit ListNode(AstNode* parent = nullptr)
+             : AstNode(parent) {}
+    std::vector<std::unique_ptr<AstNode>> children;
+    ~ListNode() override = default;
 };
-
 
 // Parser class that splits tokens using an AST
 class Parser {
-protected:
-    std::vector<ListNode> tree;
-
 private:
-    AstNode* ParseAtom(std::string value);
-    AstNode* ParseList(std::vector<std::string>::iterator& it,
-                       const std::vector<std::string>::const_iterator& end);
+    std::unique_ptr<AstNode> ParseAtom(const std::string& value);
+    std::unique_ptr<AstNode> ParseList(std::vector<std::string>::iterator& it,
+                                       const std::vector<std::string>::const_iterator& end);
 
 public:
-    AstNode* Parse(std::vector<std::string>& tokens);
-
+    std::unique_ptr<AstNode> Parse(std::vector<std::string>& tokens);
+    std::vector<std::unique_ptr<ListNode>> tree;
 };
 
 // Tokeniser class that translates tokens into the parser
@@ -123,7 +109,7 @@ public:
 
 private:
     State state_;
-    AstNode* root_;
+    std::unique_ptr<AstNode> root_;
     std::stringstream printer_;
     void read(IO& io);
     bool eval();

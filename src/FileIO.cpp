@@ -9,10 +9,10 @@
 namespace fs = std::filesystem;
 
 // Constructor
-FileIO::FileIO(std::string fileName) {
-    fileStream.open(fileName);
+FileIO::FileIO(const std::string& fileName) {
+    fileStream->open(fileName);
 
-    if (fileStream.fail()) {
+    if (fileStream->fail()) {
         fs::path p{fileName};
 
         std::cerr << "Error occurred: "
@@ -27,10 +27,10 @@ std::string FileIO::Read() {
     std::stringstream buf{""}; // initialised as an empty string
     std::string line;
 
-    if (fileStream.eof() || !fileStream)
+    if (fileStream->eof() || !fileStream)
         return buf.str();
 
-    while (std::getline(fileStream, line)) {
+    while (fileStream->getline(line.data(), INTMAX_MAX)) {
         buf << line << '\n';
     }
 
@@ -38,13 +38,13 @@ std::string FileIO::Read() {
 }
 
 void FileIO::Write(const std::string &output) {
-    fileStream << output << '\n';
+    *fileStream << output << '\n';
 }
 
 void FileIO::Log(const std::string &log) {
-    fileStream << "[LOG] " << log << '\n';
+    *fileStream << "[LOG] " << log << '\n';
 }
 
 void FileIO::Error(const std::string &error) {
-    fileStream << "[ERROR] " << error << '\n';
+    *fileStream << "[ERROR] " << error << '\n';
 }

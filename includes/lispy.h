@@ -50,40 +50,33 @@ public:
 // Abstract Syntax Tree node
 class AstNode {
 public:
-    explicit AstNode(AstNode* parent = nullptr)
-             : parent(parent) {}
+    explicit AstNode() = default;
     virtual ~AstNode() = default;
-    AstNode* parent;
 };
 
 // Terminal AST node
 class AtomNode : public AstNode {
 public:
-    explicit AtomNode(std::string value, AstNode* parent = nullptr)
-            : AstNode(parent)
-            , value(std::move(value)) {}
+    explicit AtomNode(std::string value) : value(std::move(value)) {}
     std::string value;
 };
 
 // Non-terminal AST node
 class ListNode : public AstNode {
 public:
-    explicit ListNode(AstNode* parent = nullptr)
-             : AstNode(parent) {}
-    std::vector<std::unique_ptr<AstNode>> children;
-    ~ListNode() override = default;
+    explicit ListNode() = default;
+    std::string head;
+    std::vector<std::unique_ptr<AstNode>> tail;
 };
 
 // Parser class that splits tokens using an AST
 class Parser {
 private:
-    std::unique_ptr<AstNode> ParseAtom(const std::string& value);
-    std::unique_ptr<AstNode> ParseList(std::vector<std::string>::iterator& it,
-                                       std::vector<std::string>::iterator& end);
+    std::unique_ptr<AstNode> ParseList(std::vector<std::string>::const_iterator& it,
+                                       const std::vector<std::string>::const_iterator end);
 
 public:
-    std::unique_ptr<AstNode> Parse(std::vector<std::string>& tokens);
-    std::vector<std::unique_ptr<ListNode>> tree;
+    std::unique_ptr<AstNode> Parse(const std::vector<std::string>& tokens);
 };
 
 // Tokeniser class that translates tokens into the parser
@@ -113,7 +106,7 @@ private:
     std::stringstream printer_;
     void read(IO& io);
     bool eval();
-    bool evalNode(AstNode* node);
+    std::string evalNode(const AstNode& node);
     void print(IO& io);
 };
 

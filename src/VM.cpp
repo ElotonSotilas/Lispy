@@ -43,99 +43,58 @@ void VM::read(IO &io) {
     if (tokens.empty()) {
         io.Log("Finished execution.");
         state_ = State::EXIT_STATE;
-    }
-
-    else {
+    } else {
         root_ = Parser().Parse(tokens);
     }
 }
 
 // Helper function for the eval state
-bool VM::evalNode(AstNode *node) {
-    if (auto listNode = dynamic_cast<ListNode *>(node)) {
-        if (listNode->children.empty()) {
-            std::cout << "Argument count problem: "
-                         "Operator requires at least one operand."
-                      << '\n';
-            exit(-1);
-        }
-        for (auto& child: listNode->children) {
-            if (evalNode(child.get())) {
-                return true;
-            }
-        }
+std::string VM::evalNode(const AstNode& node) {
+    if (auto atomNode = dynamic_cast<const AtomNode*>(&node)) {
+        return atomNode->value;
     }
 
-    else if (auto atomNode = dynamic_cast<AtomNode *>(node)) {
-        if (atomNode->value == "+") {
-            long double result = 0;
-            int count = 0;
-            if (auto pNode = dynamic_cast<ListNode *>(node->parent)) {
-                for (auto& child: pNode->children) {
-                    auto atom = dynamic_cast<AtomNode *>(child.get());
-                    if (atom && !atom->value.empty() && atom->value != atomNode->value) {
-                        try {
-                            auto x = std::stold(atom->value);
-                            result += x;
-                            count++;
-                        } catch (...) {
-                            std::cout << "Conversion problem: "
-                                         "Operator (+) takes arguments of types Numeric... -> Numeric"
-                                      << '\n';
-                            exit(-1);
-                        }
-                    }
-                }
+    auto& listNode = dynamic_cast<const ListNode&>(node);
+    
+
+    if (listNode.head == "+") {
+        long double sum = 0;
+        
+        for (auto& arg : listNode.tail) {
+            auto evaledArg = evalNode(*arg);
+            if (evaledArg.empty()) {
+                throw std::runtime_error("Using empty result as argument to addition");
             }
-
-            if (count == 0) {
-                std::cout << "Argument count problem: "
-                             "Operator (+) does not have any operands."
-                          << '\n';
-
-                exit(-1);
-            } else if (count < 2) {
-                std::cout << "Argument count problem: "
-                             "Operator (+) requires at least two operands."
-                          << '\n';
-
-                exit(-1);
-            } else {
-                atomNode->value = std::to_string(result);
+            try {
+                auto x = std::stold(evaledArg);
+                sum += x;
             }
-
+            catch (...) {
+                throw std::runtime_error("Conversion problem:\nOperator (+) takes arguments of types Numeric... -> Numeric");
+            }
         }
-
-        else if (atomNode->value == "print") {
-            if (auto pListNode = dynamic_cast<ListNode *>(node->parent)) {
-                if (pListNode->children.size() == 1) {
-                    std::cerr << "Argument count problem: "
-                                 "print method requires at least one argument."
-                              << '\n';
-                    exit(-1);
-                }
-                for (auto& child: pListNode->children) {
-                    auto atom = dynamic_cast<AtomNode *>(child.get());
-
-                    if (atom && !atom->value.empty()) {
-                        printer_ << atom->value;
-                    }
-                }
-            }
-            return true;
-        }
+ 
+        return std::to_string(sum);
     }
 
-    else {
-        throw std::runtime_error("Unknown node type.");
+    if (listNode.head == "print") {
+        if (listNode.tail.empty()) {
+            throw std::runtime_error("Argument count problem:\nPrinting requires at least one operand.");
+        }
+
+        for (auto& arg : listNode.tail) {
+            std::cout << evalNode(*arg) << ' ';
+        }
+        std::cout << '\n';
+        return "";
     }
 
-    return false;
+    throw std::runtime_error("Unknown function: " + listNode.head);
 }
 
 bool VM::eval() {
     if (root_) {
-        return evalNode(root_.get());
+        evalNode(*root_);
     }
 
     return false;

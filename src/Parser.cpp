@@ -4,40 +4,43 @@
 
 #include <iterator>
 #include "lispy.h"
+#include <cassert>
 
-std::unique_ptr<AstNode> Parser::Parse(std::vector<std::string> &tokens) {
-    auto it = tokens.begin();
-    auto end = tokens.end();
-    return ParseList(it, end);
+std::unique_ptr<AstNode> Parser::Parse(const std::vector<std::string> &tokens) {
+    if (tokens.size() == 1 && tokens.front() != "(") {
+        return std::make_unique<AtomNode>(tokens.front());
+    }
+    auto parseHead = tokens.begin();
+    ++parseHead; // skip first opening parenthesis
+    return ParseList(parseHead, tokens.end());
 }
 
-std::unique_ptr<AstNode> Parser::ParseAtom(const std::string& value) {
-    return std::make_unique<AtomNode>(value);
-}
-
-std::unique_ptr<AstNode> Parser::ParseList(std::vector<std::string>::iterator& it,
-                           std::vector<std::string>::iterator& end) {
+std::unique_ptr<AstNode> Parser::ParseList(std::vector<std::string>::const_iterator& it,
+    const std::vector<std::string>::const_iterator end) {
     auto node = std::make_unique<ListNode>();
-    while (it <= end && *it != ")") {
-        if (*it == "(") {
-            ++it;
-            node->children.push_back(ParseList(it, end));
-            for (auto& c : node->children) {
-                if (c) c->parent = dynamic_cast<AstNode*>(node.get());
-            }
+    while (true) {
+        if (it == end) {
+            throw std::runtime_error("Missing closing parenthesis");
         }
-
-        else {
-            auto child = ParseAtom(*it);
-            if (auto listNode = dynamic_cast<ListNode*>(node.get())) {
-                child->parent = listNode;
-                listNode->children.push_back(std::move(child)); // add as child if parent is a ListNode
+        else if (*it == ")") {
+            break;
+        }
+        else if (*it == "(") {
+            if (node->head.empty()) {
+                // this means we encountered two opening parnetheses in a row
+                throw std::runtime_error("Parse Error: List nodes must have literal head");
             }
+            ++it; // advance past opening parenthesis
+            node->tail.push_back(ParseList(it, end));
+        }
+        else if (node->head.empty()) {
+            node->head = *it;
+        }
+        else {
+            node->tail.push_back(std::make_unique<AtomNode>(*it)); // add as child if parent is a ListNode
         }
         ++it;
     }
-
-    tree.push_back(std::move(node));
     return node;
 }
 
